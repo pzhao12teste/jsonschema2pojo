@@ -270,7 +270,7 @@ public class IncludeJsr303AnnotationsIT {
                 config("includeJsr303Annotations", true));
 
         Class validArrayType = resultsClassLoader.loadClass("com.example.ValidArray");
-        Class refarrayType = resultsClassLoader.loadClass("com.example.Product");
+        Class refarrayType = resultsClassLoader.loadClass("com.example.Refarray");
 
         List<Object> objectArrayList = new ArrayList<Object>();
 

@@ -32,7 +32,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.Reference;
@@ -105,8 +104,6 @@ public class Jsonschema2PojoTask extends Task implements GenerationConfig {
 
     private boolean includeJsr305Annotations = false;
 
-    private boolean useOptionalForGetters;
-
     private SourceType sourceType = SourceType.JSONSCHEMA;
 
     private Path classpath;
@@ -120,6 +117,8 @@ public class Jsonschema2PojoTask extends Task implements GenerationConfig {
     private boolean useJodaLocalDates = false;
 
     private boolean useJodaLocalTimes = false;
+
+    private boolean useCommonsLang3 = false;
 
     private boolean parcelable = false;
 
@@ -176,7 +175,7 @@ public class Jsonschema2PojoTask extends Task implements GenerationConfig {
     private SourceSortOrder sourceSortOrder = SourceSortOrder.OS;
 
     private Language targetLanguage = Language.JAVA;
-
+    
     /**
      * Execute this task (it's expected that all relevant setters will have been
      * called by Ant to provide task configuration <em>before</em> this method
@@ -517,18 +516,6 @@ public class Jsonschema2PojoTask extends Task implements GenerationConfig {
         this.includeJsr305Annotations = includeJsr305Annotations;
     }
 
-
-    /**
-     * Sets the 'useOptionalForGetters' property of this class
-     *
-     * @param useOptionalForGetters
-     *         Whether to use {@link java.util.Optional} as return type for
-     *         getters of non-required fields.
-     */
-    public void setUseOptionalForGetters(boolean useOptionalForGetters) {
-        this.useOptionalForGetters = useOptionalForGetters;
-    }
-
     /**
      * Sets the 'sourceType' property of this class
      *
@@ -613,9 +600,12 @@ public class Jsonschema2PojoTask extends Task implements GenerationConfig {
      * Sets the 'useCommonsLang3' property of this class
      *
      * @param useCommonsLang3
+     *            Whether to use commons-lang 3.x imports instead of
+     *            commons-lang 2.x imports when adding equals, hashCode and
+     *            toString methods.
      */
     public void setUseCommonsLang3(boolean useCommonsLang3) {
-        super.log("useCommonsLang3 is deprecated. Please remove it from your config.", Project.MSG_WARN);
+        this.useCommonsLang3 = useCommonsLang3;
     }
 
     /**
@@ -967,11 +957,6 @@ public class Jsonschema2PojoTask extends Task implements GenerationConfig {
     }
 
     @Override
-    public boolean isUseOptionalForGetters() {
-        return useOptionalForGetters;
-    }
-
-    @Override
     public SourceType getSourceType() {
         return sourceType;
     }
@@ -1022,6 +1007,11 @@ public class Jsonschema2PojoTask extends Task implements GenerationConfig {
     @Override
     public boolean isUseJodaLocalTimes() {
         return useJodaLocalTimes;
+    }
+
+    @Override
+    public boolean isUseCommonsLang3() {
+        return useCommonsLang3;
     }
 
     @Override

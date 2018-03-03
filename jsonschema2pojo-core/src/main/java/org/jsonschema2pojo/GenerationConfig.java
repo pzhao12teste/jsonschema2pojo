@@ -227,14 +227,6 @@ public interface GenerationConfig {
     boolean isIncludeJsr305Annotations();
 
     /**
-     * Gets the 'useOptionalForGetters' configuration option.
-     *
-     * @return Whether to use {@link java.util.Optional} as return type for
-     *         getters of non-required fields.
-     */
-    boolean isUseOptionalForGetters();
-
-    /**
      * Gets the 'sourceType' configuration option.
      *
      * @return The type of input documents that will be read
@@ -293,6 +285,14 @@ public interface GenerationConfig {
      *         date-time) to generated Java types.
      */
     boolean isUseJodaLocalTimes();
+
+    /**
+     * Gets the 'useCommonsLang3' configuration option.
+     *
+     * @return Whether to use commons-lang 3.x imports instead of commons-lang
+     *         2.x imports when adding equals, hashCode and toString methods.
+     */
+    boolean isUseCommonsLang3();
 
     /**
      * Gets the 'parcelable' configuration option.

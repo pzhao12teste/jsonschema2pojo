@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.Locale;
 
 import org.jsonschema2pojo.integration.util.Jsonschema2PojoRule;
 import org.junit.BeforeClass;
@@ -223,7 +222,7 @@ public class CustomDateTimeFormatIT {
         final Object instance = classWhenFormatDatesTrue.newInstance();
         classWhenFormatDatesTrue.getMethod("setCustomFormatCustomTime", Date.class).invoke(instance, new Date(999999999999L));
 
-        final String json = new ObjectMapper().setLocale(Locale.ENGLISH).writeValueAsString(instance);
+        final String json = new ObjectMapper().writeValueAsString(instance);
 
         assertThat(json, is("{\"customFormatCustomTime\":\"1:46 AM\"}"));
     }

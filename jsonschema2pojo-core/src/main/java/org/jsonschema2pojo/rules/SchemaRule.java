@@ -16,16 +16,8 @@
 
 package org.jsonschema2pojo.rules;
 
-import static org.apache.commons.lang3.StringUtils.*;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
-import org.jsonschema2pojo.Jsonschema2Pojo;
-import org.jsonschema2pojo.Schema;
-import org.jsonschema2pojo.exception.GenerationException;
-
 import com.fasterxml.jackson.databind.JsonNode;
+import org.jsonschema2pojo.Schema;
 import com.sun.codemodel.JClassContainer;
 import com.sun.codemodel.JType;
 
@@ -64,8 +56,6 @@ public class SchemaRule implements Rule<JClassContainer, JType> {
     public JType apply(String nodeName, JsonNode schemaNode, JClassContainer generatableType, Schema schema) {
 
         if (schemaNode.has("$ref")) {
-            final String nameFromRef = nameFromRef(schemaNode.get("$ref").asText());
-
             schema = ruleFactory.getSchemaStore().create(schema, schemaNode.get("$ref").asText(), ruleFactory.getGenerationConfig().getRefFragmentPathDelimiters());
             schemaNode = schema.getContent();
 
@@ -73,7 +63,7 @@ public class SchemaRule implements Rule<JClassContainer, JType> {
                 return schema.getJavaType();
             }
 
-            return apply(nameFromRef != null ? nameFromRef : nodeName, schemaNode, generatableType, schema);
+            return apply(nodeName, schemaNode, generatableType, schema);
         }
 
         JType javaType;
@@ -85,26 +75,5 @@ public class SchemaRule implements Rule<JClassContainer, JType> {
         schema.setJavaTypeIfEmpty(javaType);
 
         return javaType;
-    }
-    
-    private String nameFromRef(String ref) {
-        
-        if ("#".equals(ref)) {
-            return null;
-        }
-        
-        String nameFromRef;
-        if (!contains(ref, "#")) {
-            nameFromRef = Jsonschema2Pojo.getNodeName(ref, ruleFactory.getGenerationConfig());
-        } else {
-            String[] nameParts = split(ref, "/\\#");
-            nameFromRef = nameParts[nameParts.length - 1];
-        }
-        
-        try {
-            return URLDecoder.decode(nameFromRef, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new GenerationException("Failed to decode ref: " + ref, e);
-        }
     }
 }

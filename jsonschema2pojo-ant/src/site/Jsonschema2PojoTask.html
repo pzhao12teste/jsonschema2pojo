@@ -248,13 +248,6 @@
         <td align="center" valign="top">No (default <code>false</code>)</td>
     </tr>
     <tr>
-        <td valign="top">useOptionalForGetters</td>
-        <td valign="top">Whether to use <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a> as return type for
-            getters of non-required fields.
-        </td>
-        <td align="center" valign="top">No (default <code>false</code>)</td>
-    </tr>
-    <tr>
         <td valign="top">includeToString</td>
         <td valign="top">Whether to use include a <code>toString</code> method in generated Java types.</td>
         <td align="center" valign="top">No (default <code>true</code>)</td>
@@ -344,6 +337,13 @@
             been supplied in the schema using the 'javaType' property).
         </td>
         <td align="center" valign="top">No</td>
+    </tr>
+    <tr>
+        <td valign="top">useCommonsLang3</td>
+        <td valign="top">Whether to use commons-lang 3.x imports instead of commons-lang 2.x imports when adding equals,
+            hashCode and toString methods.
+        </td>
+        <td align="center" valign="top">No (default <code>false</code>)</td>
     </tr>
     <tr>
         <td valign="top">useDoubleNumbers</td>

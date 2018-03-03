@@ -103,16 +103,10 @@ public class NameHelper {
      * @return
      */
     public String getSetterName(String propertyName, JsonNode node) {
-        propertyName = getPropertyNameForAccessor(propertyName, node);
-        
-        String prefix = "set";
+        propertyName = getFieldName(propertyName, node);
 
-        String setterName;
-        if (propertyName.length() > 1 && Character.isUpperCase(propertyName.charAt(1))) {
-            setterName = prefix + propertyName;
-        } else {
-            setterName = prefix + capitalize(propertyName);
-        }
+        propertyName = replaceIllegalCharacters(propertyName);
+        String setterName = "set" + capitalize(capitalizeTrailingWords(propertyName));
 
         if (setterName.equals("setClass")) {
             setterName = "setClass_";
@@ -146,28 +140,16 @@ public class NameHelper {
      * @return
      */
     public String getGetterName(String propertyName, JType type, JsonNode node) {
-        propertyName = getPropertyNameForAccessor(propertyName, node);
-        
-        String prefix = type.equals(type.owner()._ref(boolean.class)) ? "is" : "get";
+        propertyName = getFieldName(propertyName, node);
 
-        String getterName;
-        if (propertyName.length() > 1 && Character.isUpperCase(propertyName.charAt(1))) {
-            getterName = prefix + propertyName;
-        } else {
-            getterName = prefix + capitalize(propertyName);
-        }
+        String prefix = type.equals(type.owner()._ref(boolean.class)) ? "is" : "get";
+        propertyName = replaceIllegalCharacters(propertyName);
+        String getterName = prefix + capitalize(capitalizeTrailingWords(propertyName));
 
         if (getterName.equals("getClass")) {
             getterName = "getClass_";
         }
 
         return getterName;
-    }
-    
-    private String getPropertyNameForAccessor(String jsonPropertyName, JsonNode node) {
-        jsonPropertyName = getFieldName(jsonPropertyName, node);
-        jsonPropertyName = replaceIllegalCharacters(jsonPropertyName);
-        jsonPropertyName = capitalizeTrailingWords(jsonPropertyName);
-        return jsonPropertyName;
     }
 }

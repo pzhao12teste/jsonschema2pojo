@@ -158,9 +158,6 @@ public class DefaultGenerationConfig implements GenerationConfig {
         return false;
     }
 
-    @Override
-    public boolean isUseOptionalForGetters() { return false; }
-
     /**
      * @return {@link SourceType#JSONSCHEMA}
      */
@@ -206,6 +203,14 @@ public class DefaultGenerationConfig implements GenerationConfig {
      */
     @Override
     public boolean isUseJodaLocalTimes() {
+        return false;
+    }
+
+    /**
+     * @return <code>false</code>
+     */
+    @Override
+    public boolean isUseCommonsLang3() {
         return false;
     }
 

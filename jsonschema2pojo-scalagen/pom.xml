@@ -6,12 +6,12 @@
     <parent>
         <artifactId>jsonschema2pojo</artifactId>
         <groupId>org.jsonschema2pojo</groupId>
-        <version>1.0.0-alpha2-SNAPSHOT</version>
+        <version>0.5.2-SNAPSHOT</version>
     </parent>
 
     <groupId>org.jsonschema2pojo</groupId>
     <artifactId>jsonschema2pojo-scalagen</artifactId>
-    <version>1.0.0-alpha2-SNAPSHOT</version>
+    <version>0.5.2-SNAPSHOT</version>
 
     <properties>
         <commons.collections.version>4.01</commons.collections.version>
@@ -36,7 +36,6 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.2.1</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>

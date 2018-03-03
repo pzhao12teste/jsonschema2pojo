@@ -48,14 +48,26 @@ public class IncludeToStringExcludesIT {
     }
 
     @Test
-    public void beansIncludeAllToStringPropertiesByDefault() throws ClassNotFoundException, SecurityException, NoSuchMethodException {
+    public void beansIncludeAllToStringPropertiesByDefaultCL() throws ClassNotFoundException, SecurityException, NoSuchMethodException {
         testConfig(config(),
                 "com.example.PrimitiveProperties@%s[a=<null>,b=<null>,c=<null>,additionalProperties={}]");
     }
 
     @Test
-    public void beansOmitToStringProperties() throws ClassNotFoundException, SecurityException, NoSuchMethodException {
+    public void beansIncludeAllToStringPropertiesByDefaultCL3() throws ClassNotFoundException, SecurityException, NoSuchMethodException {
+        testConfig(config("useCommonsLang3", true),
+                "com.example.PrimitiveProperties@%s[a=<null>,b=<null>,c=<null>,additionalProperties={}]");
+    }
+
+    @Test
+    public void beansOmitToStringPropertiesWhenConfigIsSetCL() throws ClassNotFoundException, SecurityException, NoSuchMethodException {
         testConfig(config("toStringExcludes", new String[] {"b","c"}),
+                "com.example.PrimitiveProperties@%s[a=<null>,additionalProperties={}]");
+    }
+
+    @Test
+    public void beansOmitToStringPropertiesWhenConfigIsSetCL3() throws ClassNotFoundException, SecurityException, NoSuchMethodException {
+        testConfig(config("useCommonsLang3", true,"toStringExcludes", new String[] {"b","c"}),
                 "com.example.PrimitiveProperties@%s[a=<null>,additionalProperties={}]");
     }
 

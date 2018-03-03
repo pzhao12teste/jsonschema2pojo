@@ -16,13 +16,19 @@
 
 package org.jsonschema2pojo.example;
 
-import com.sun.codemodel.JCodeModel;
-import org.jsonschema2pojo.*;
-import org.jsonschema2pojo.rules.RuleFactory;
-
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
+
+import org.jsonschema2pojo.DefaultGenerationConfig;
+import org.jsonschema2pojo.GenerationConfig;
+import org.jsonschema2pojo.Jackson2Annotator;
+import org.jsonschema2pojo.SchemaGenerator;
+import org.jsonschema2pojo.SchemaMapper;
+import org.jsonschema2pojo.SchemaStore;
+import org.jsonschema2pojo.rules.RuleFactory;
+
+import com.sun.codemodel.JCodeModel;
 
 public class Example {
 
@@ -32,7 +38,7 @@ public class Example {
 
         JCodeModel codeModel = new JCodeModel();
 
-        URL source = Example.class.getResource("/schema/required.json");
+        URL source = new URL("file:///path/to/my/schema.json");
 
         GenerationConfig config = new DefaultGenerationConfig() {
             @Override
@@ -44,7 +50,7 @@ public class Example {
         SchemaMapper mapper = new SchemaMapper(new RuleFactory(config, new Jackson2Annotator(config), new SchemaStore()), new SchemaGenerator());
         mapper.generate(codeModel, "ClassName", "com.example", source);
 
-        codeModel.build(Files.createTempDirectory("required").toFile());
+        codeModel.build(new File("output"));
 
         // END EXAMPLE
 

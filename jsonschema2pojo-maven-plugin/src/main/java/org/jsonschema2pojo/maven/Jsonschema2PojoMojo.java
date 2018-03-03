@@ -329,12 +329,6 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
     private boolean includeJsr305Annotations = false;
 
     /**
-     * Whether to use {@link java.util.Optional} as return type for
-     * getters of non-required fields.
-     */
-     private boolean useOptionalForGetters = false;
-
-    /**
      * The type of input documents that will be read
      * <p>
      * Supported values:
@@ -512,8 +506,8 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
     private String classNameSuffix = "";
 
     /**
-     * The strings (no preceeding dot) that should be considered as file name
-     * extensions, and therefore ignored, when creating Java class names.
+     * The file extenations that should be considered as file name extensions,
+     * and therefore ignored, when creating Java class names.
      *
      * @parameter expression="${jsonschema2pojo.fileExtensions}"
      *            default-value=""
@@ -796,10 +790,6 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
             project.addCompileSourceRoot(outputDirectory.getPath());
         }
 
-        if (useCommonsLang3) {
-            getLog().warn("useCommonsLang3 is deprecated. Please remove it from your config.");
-        }
-
         try {
             Jsonschema2Pojo.generate(this);
         } catch (IOException e) {
@@ -933,9 +923,6 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
     }
 
     @Override
-    public boolean isUseOptionalForGetters() { return useOptionalForGetters; }
-
-    @Override
     public SourceType getSourceType() {
         return SourceType.valueOf(sourceType.toUpperCase());
     }
@@ -965,6 +952,7 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
         return useJodaLocalTimes;
     }
 
+    @Override
     public boolean isUseCommonsLang3() {
         return useCommonsLang3;
     }
